@@ -27,4 +27,10 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.getUsers
   )
+
+  app.get(
+    '/api/users/:id/freeze',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.freezeUser
+  )
 };

@@ -80,6 +80,7 @@ exports.signin = (req, res) => {
           id: user.id,
           username: user.username,
           email: user.email,
+          freezeExpiryDate: user.freezeExpiryDate,
           roles: authorities,
           accessToken: token
         });
