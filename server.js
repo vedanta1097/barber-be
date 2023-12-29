@@ -30,13 +30,6 @@ function initial() {
     id: 2,
     name: 'admin'
   });
-
-  User.create({
-    username: 'admin',
-    email: 'admin@barber.com',
-    password: '123456',
-    freezeExpiryDate: null,
-  })
 }
 
 db.sequelize.sync({force: true}).then(() => {
