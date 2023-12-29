@@ -4,14 +4,6 @@ const db = require('../models');
 const User = db.user;
 const Role = db.role;
 
-exports.userBoard = (req, res) => {
-  res.status(200).send('User Content.');
-};
-
-exports.adminBoard = (req, res) => {
-  res.status(200).send('Admin Content.');
-};
-
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.findAll({
@@ -31,7 +23,9 @@ exports.getUsers = async (req, res) => {
       }
     }))
   } catch {
-    res.status(500).send('Sorry, something went wrong on our end. Please try again later.');
+    res.status(500).send({
+      message: 'Sorry, something went wrong on our end. Please try again later.'
+    });
   }
 }
 
@@ -44,9 +38,13 @@ exports.freezeUser = async (req, res) => {
         id: req.params.id
       }
     })
-    res.status(200).send(`User is successfully frozen until: ${freezeExpiryDate.toISOString()}`)
+    res.status(200).send({
+      message: `User is successfully frozen until: ${freezeExpiryDate.toISOString()}`
+    })
   } catch {
-    res.status(500).send('Sorry, something went wrong on our end. Please try again later.');
+    res.status(500).send({
+      message: 'Sorry, something went wrong on our end. Please try again later.'
+    });
   }
 }
 
@@ -57,8 +55,12 @@ exports.deleteUser = async (req, res) => {
         id: req.params.id
       }
     });
-    res.status(200).send('User is successfully deleted')
+    res.status(200).send({
+      message: 'User is successfully deleted'
+    })
   } catch {
-    res.status(500).send('Sorry, something went wrong on our end. Please try again later.');
+    res.status(500).send({
+      message: 'Sorry, something went wrong on our end. Please try again later.'
+    });
   }
 }

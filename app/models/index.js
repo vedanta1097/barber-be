@@ -45,5 +45,6 @@ db.service.hasMany(db.booking)
 db.booking.belongsTo(db.service)
 
 db.ROLES = ['user', 'admin'];
+db.GENDERS = ['M', 'F'];
 
 module.exports = db;
