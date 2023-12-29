@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+var bcrypt = require('bcryptjs');
 
 const app = express();
 
@@ -38,14 +39,14 @@ async function initial() {
   const customer = await User.create({
     username: 'user1',
     email: 'user1@barber.com',
-    password: '123456',
+    password: bcrypt.hashSync('123456', 8),
     freezeExpiryDate: null
   })
   customer.setRoles([1])
   const userAdmin = await User.create({
     username: 'admin',
     email: 'admin@barber.com',
-    password: '123456',
+    password: bcrypt.hashSync('123456', 8),
     freezeExpiryDate: null
   })
   userAdmin.setRoles([2])
