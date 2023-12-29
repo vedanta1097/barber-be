@@ -17,7 +17,7 @@ module.exports = function(app) {
   )
 
   app.post(
-    '/api/bookings/:id/done',
+    '/api/bookings/:id/finish',
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.doneBooking
   )
