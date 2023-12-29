@@ -31,7 +31,7 @@ exports.getUsers = async (req, res) => {
       }
     }))
   } catch {
-    res.status(500).send('Error. Please try again next time.');
+    res.status(500).send('Sorry, something went wrong on our end. Please try again later.');
   }
 }
 
@@ -46,7 +46,7 @@ exports.freezeUser = async (req, res) => {
     })
     res.status(200).send(`User is successfully frozen until: ${freezeExpiryDate.toISOString()}`)
   } catch {
-    res.status(500).send('Error. Please try again next time.');
+    res.status(500).send('Sorry, something went wrong on our end. Please try again later.');
   }
 }
 
@@ -59,6 +59,6 @@ exports.deleteUser = async (req, res) => {
     });
     res.status(200).send('User is successfully deleted')
   } catch {
-    res.status(500).send('Error. Please try again next time.');
+    res.status(500).send('Sorry, something went wrong on our end. Please try again later.');
   }
 }
