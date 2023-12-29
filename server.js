@@ -1,10 +1,10 @@
-const express = require("express");
-const cors = require("cors");
+const express = require('express');
+const cors = require('cors');
 
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: 'http://localhost:8081'
 };
 
 app.use(cors(corsOptions));
@@ -15,19 +15,27 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-const db = require("./app/models");
+const db = require('./app/models');
 const Role = db.role;
+const User = db.user;
 
 function initial() {
   Role.create({
     id: 1,
-    name: "user"
+    name: 'user'
   });
 
   Role.create({
     id: 2,
-    name: "admin"
+    name: 'admin'
   });
+
+  User.create({
+    username: 'admin',
+    email: 'admin@barber.com',
+    password: '123456',
+    freezeExpiryDate: null,
+  })
 }
 
 db.sequelize.sync({force: true}).then(() => {
@@ -36,8 +44,8 @@ db.sequelize.sync({force: true}).then(() => {
 });
 
 // simple route
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to bezkoder application.' });
 });
 
 // routes

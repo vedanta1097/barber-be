@@ -1,3 +1,3 @@
 module.exports = {
-  secret: "barber-secret-key"
+  secret: 'barber-secret-key'
 };

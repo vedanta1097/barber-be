@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("users", {
+  const User = sequelize.define('users', {
     username: {
       type: Sequelize.STRING
     },
@@ -9,8 +9,8 @@ module.exports = (sequelize, Sequelize) => {
     password: {
       type: Sequelize.STRING
     },
-    isblacklisted: {
-      type: Sequelize.BOOLEAN
+    freezeExpiryDate: {
+      type: Sequelize.DATE
     }
   });
 
