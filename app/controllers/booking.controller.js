@@ -28,7 +28,7 @@ exports.doneBooking = (req, res) => {
 exports.getBookings = (req, res) => {
   try {
     res.status(200).send({
-      message: 'Return list of bookings'
+      message: 'Return list of bookings lalalalal'
     })
   } catch {
     res.status(500).send({
