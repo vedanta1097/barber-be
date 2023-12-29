@@ -19,17 +19,79 @@ app.use(express.urlencoded({ extended: true }));
 const db = require('./app/models');
 const Role = db.role;
 const User = db.user;
+const Capster = db.capster;
+const Service = db.service;
+const Booking = db.booking;
 
-function initial() {
+async function initial() {
+  // create roles
   Role.create({
     id: 1,
     name: 'user'
   });
-
   Role.create({
     id: 2,
     name: 'admin'
   });
+
+  // create users
+  const customer = await User.create({
+    username: 'user1',
+    email: 'user1@barber.com',
+    password: '123456',
+    freezeExpiryDate: null
+  })
+  customer.setRoles([1])
+  const userAdmin = await User.create({
+    username: 'admin',
+    email: 'admin@barber.com',
+    password: '123456',
+    freezeExpiryDate: null
+  })
+  userAdmin.setRoles([2])
+
+  // create capsters
+  Capster.create({
+    name: 'Rizky',
+    placeOfBirth: 'Mojokerto',
+    dateOfBirth: '1998-12-29 00:00:00',
+    gender: 'M'
+  })
+  Capster.create({
+    name: 'Gunawan',
+    placeOfBirth: 'Denpasar',
+    dateOfBirth: '1995-10-11 00:00:00',
+    gender: 'M'
+  })
+  Capster.create({
+    name: 'Fajar',
+    placeOfBirth: 'Jakarta',
+    dateOfBirth: '2000-01-21 00:00:00',
+    gender: 'M'
+  })
+
+  // create services
+  const basicCut = await Service.create({
+    name: 'Basic Cut',
+    price: 35000
+  })
+  Service.create({
+    name: 'Hair Color',
+    price: 80000
+  })
+  Service.create({
+    name: 'Hair Perming',
+    price: 250000
+  })
+
+  // create bookings
+  const booking1 = await Booking.create({
+    date: '2023-12-30 01:39:48',
+    time: 19,
+    isDone: false
+  })
+  customer.addBooking(booking1)
+  basicCut.addBooking(booking1)
 }
 
 db.sequelize.sync({force: true}).then(() => {
