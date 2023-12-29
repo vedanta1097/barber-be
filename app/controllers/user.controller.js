@@ -49,3 +49,16 @@ exports.freezeUser = async (req, res) => {
     res.status(500).send('Error. Please try again next time.');
   }
 }
+
+exports.deleteUser = async (req, res) => {
+  try {
+    await User.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.status(200).send('User is successfully deleted')
+  } catch {
+    res.status(500).send('Error. Please try again next time.');
+  }
+}

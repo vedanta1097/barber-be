@@ -28,9 +28,15 @@ module.exports = function(app) {
     controller.getUsers
   )
 
-  app.get(
+  app.post(
     '/api/users/:id/freeze',
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.freezeUser
+  )
+
+  app.delete(
+    '/api/users/:id',
+    [authJwt.verifyToken, authJwt.isAdmin],
+    controller.deleteUser
   )
 };
