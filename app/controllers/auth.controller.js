@@ -63,12 +63,14 @@ exports.signin = (req, res) => {
         });
       }
 
+      // Set the expiration time to 1 year
+      const expiresInOneYear = 365 * 24 * 60 * 60; // seconds in a year
       const token = jwt.sign({ id: user.id },
                               config.secret,
                               {
                                 algorithm: 'HS256',
                                 allowInsecureKeySizes: true,
-                                expiresIn: 86400, // 24 hours
+                                expiresIn: expiresInOneYear,
                               });
 
       var authorities = [];
