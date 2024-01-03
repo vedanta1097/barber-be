@@ -123,8 +123,17 @@ exports.getMyBookingsTime = async (req, res) => {
 }
 
 
-exports.deleteBooking = (req, res) => {
+exports.deleteBooking = async (req, res) => {
   try {
+    const booking = await Booking.findByPk(req.params.id)
+    if (!booking) {
+      return res.status(404).send({ message: 'Booking Not found.' });
+    }
+    await Booking.destroy({
+      where: {
+        id: req.params.id
+      }
+    });
     res.status(200).send({
       message: 'Booking is successfully deleted'
     })

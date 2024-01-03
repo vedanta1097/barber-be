@@ -64,6 +64,10 @@ exports.getCapsters = async (req, res) => {
 
 exports.deleteCapster = async (req, res) => {
   try {
+    const capster = await Capster.findByPk(req.params.id)
+    if (!capster) {
+      return res.status(404).send({ message: 'Capster Not found.' });
+    }
     await Capster.destroy({
       where: {
         id: req.params.id
