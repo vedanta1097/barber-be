@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const db = require('../models');
+const Op = db.Sequelize.Op;
 const config = require('../config/auth.config.js');
 const Booking = db.booking;
 
@@ -51,11 +52,17 @@ exports.doneBooking = async (req, res) => {
   }
 }
 
-exports.getBookings = (req, res) => {
+exports.getBookings = async (req, res) => {
   try {
-    res.status(200).send({
-      message: 'Return list of bookings'
+    const bookings = await Booking.findAll({
+      where: {
+        isDone: false,
+        date: {
+          [Op.gte]: new Date()
+        }
+      }
     })
+    res.status(200).send(bookings)
   } catch {
     res.status(500).send({
       message: 'Sorry, something went wrong on our end. Please try again later.'

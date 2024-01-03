@@ -96,6 +96,7 @@ async function initial() {
   basicCut.addBooking(booking1)
 }
 
+// `force: true` will reset the database everytime we run server.js
 db.sequelize.sync({force: true}).then(() => {
   console.log('Drop and Resync Db');
   initial();
