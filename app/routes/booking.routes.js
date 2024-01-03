@@ -34,10 +34,10 @@ module.exports = function(app) {
     controller.getMyBookings
   )
 
-  app.get(
-    '/api/bookings/time',
+  app.post(
+    '/api/bookings/me/time',
     [authJwt.verifyToken],
-    controller.getBookingsTime
+    controller.getMyBookingsTime
   )
 
   app.delete(

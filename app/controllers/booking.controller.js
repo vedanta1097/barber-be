@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { setHours } = require("date-fns");
 const db = require('../models');
 const Op = db.Sequelize.Op;
 const config = require('../config/auth.config.js');
@@ -76,6 +77,7 @@ exports.getMyBookings = async (req, res) => {
     const token = req.headers['x-access-token']
     const decoded = jwt.verify(token, config.secret)
 
+    // get bookings of current user
     const bookings = await Booking.findAll({
       where: {
         isDone: false,
@@ -93,11 +95,26 @@ exports.getMyBookings = async (req, res) => {
   }
 }
 
-exports.getBookingsTime = (req, res) => {
+exports.getMyBookingsTime = async (req, res) => {
   try {
-    res.status(200).send({
-      message: 'Return list of time that already booked in that date'
+    // get current user from token
+    const token = req.headers['x-access-token']
+    const decoded = jwt.verify(token, config.secret)
+
+    // get all bookings from date in range from 00:00 to 23:00 of current user
+    const bookings = await Booking.findAll({
+      where: {
+        isDone: false,
+        date: {
+          [Op.gte]: setHours(new Date(req.body.date), 0),
+          [Op.lte]: setHours(new Date(req.body.date), 23),
+        },
+        userId: decoded.id
+      }
     })
+    // return array of time e.g. [16,17,18,18,19]
+    const bookingTime = bookings.map(book => book.time)
+    res.status(200).send(bookingTime)
   } catch {
     res.status(500).send({
       message: 'Sorry, something went wrong on our end. Please try again later.'
