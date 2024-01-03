@@ -31,7 +31,7 @@ module.exports = function(app) {
   app.get(
     '/api/bookings/me',
     [authJwt.verifyToken],
-    controller.getBookings
+    controller.getMyBookings
   )
 
   app.get(

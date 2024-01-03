@@ -70,11 +70,22 @@ exports.getBookings = async (req, res) => {
   }
 }
 
-exports.getMyBookings = (req, res) => {
+exports.getMyBookings = async (req, res) => {
   try {
-    res.status(200).send({
-      message: 'Return my list of bookings based on my token'
+    // get current user from token
+    const token = req.headers['x-access-token']
+    const decoded = jwt.verify(token, config.secret)
+
+    const bookings = await Booking.findAll({
+      where: {
+        isDone: false,
+        date: {
+          [Op.gte]: new Date()
+        },
+        userId: decoded.id
+      }
     })
+    res.status(200).send(bookings)
   } catch {
     res.status(500).send({
       message: 'Sorry, something went wrong on our end. Please try again later.'
