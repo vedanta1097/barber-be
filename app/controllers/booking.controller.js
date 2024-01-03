@@ -1,8 +1,25 @@
+const jwt = require('jsonwebtoken');
 const db = require('../models');
+const config = require('../config/auth.config.js');
 const Booking = db.booking;
 
-exports.addBooking = (req, res) => {
+exports.addBooking = async (req, res) => {
   try {
+    // create new booking
+    const newBooking = await Booking.create({
+      date: req.body.date,
+      time: req.body.time,
+      isDone: false
+    })
+
+    // add user and service to the booking
+    const token = req.headers['x-access-token']
+    const decoded = jwt.verify(token, config.secret)
+    const asdasd = await Promise.all([
+      newBooking.setUser(decoded.id),
+      newBooking.setService(req.body.serviceId)
+    ])
+
     res.status(200).send({
       message: 'Booking is successfully created'
     })
