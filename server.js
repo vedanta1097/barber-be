@@ -24,83 +24,92 @@ const User = db.user;
 const Capster = db.capster;
 const Service = db.service;
 const Booking = db.booking;
+const Testimony = db.testimony;
 
 async function initial() {
   // create roles
   Role.create({
     id: 1,
-    name: 'user'
+    name: "user",
   });
   Role.create({
     id: 2,
-    name: 'admin'
+    name: "admin",
   });
 
   // create users
   const customer = await User.create({
-    username: 'user1',
-    email: 'user1@barber.com',
-    password: bcrypt.hashSync('123456', 8),
-    freezeExpiryDate: null
-  })
-  customer.setRoles([1])
+    username: "user1",
+    email: "user1@barber.com",
+    password: bcrypt.hashSync("123456", 8),
+    freezeExpiryDate: null,
+  });
+  customer.setRoles([1]);
   const userAdmin = await User.create({
-    username: 'admin',
-    email: 'admin@barber.com',
-    password: bcrypt.hashSync('123456', 8),
-    freezeExpiryDate: null
-  })
-  userAdmin.setRoles([2])
+    username: "admin",
+    email: "admin@barber.com",
+    password: bcrypt.hashSync("123456", 8),
+    freezeExpiryDate: null,
+  });
+  userAdmin.setRoles([2]);
 
   // create capsters
   Capster.create({
-    name: 'Rizky',
-    placeOfBirth: 'Mojokerto',
-    dateOfBirth: '1998-12-29 00:00:00',
-    gender: 'M'
-  })
+    name: "Rizky",
+    placeOfBirth: "Mojokerto",
+    dateOfBirth: "1998-12-29 00:00:00",
+    gender: "M",
+  });
   Capster.create({
-    name: 'Gunawan',
-    placeOfBirth: 'Denpasar',
-    dateOfBirth: '1995-10-11 00:00:00',
-    gender: 'M'
-  })
+    name: "Gunawan",
+    placeOfBirth: "Denpasar",
+    dateOfBirth: "1995-10-11 00:00:00",
+    gender: "M",
+  });
   Capster.create({
-    name: 'Fajar',
-    placeOfBirth: 'Jakarta',
-    dateOfBirth: '2000-01-21 00:00:00',
-    gender: 'M'
-  })
+    name: "Fajar",
+    placeOfBirth: "Jakarta",
+    dateOfBirth: "2000-01-21 00:00:00",
+    gender: "M",
+  });
 
   // create services
   const basicCut = await Service.create({
     name: "Basic Cut",
     price: 35000,
     description:
-      "Paket layanan yang paling sederhana, cocok untuk kamu yang hanya ingin potong rambut."
+      "Paket layanan yang paling sederhana, cocok untuk kamu yang hanya ingin potong rambut.",
   });
   Service.create({
     name: "Hair Color Black",
     price: 80000,
     description:
-      "Paket layanan ini cocok untuk kamu yang ingin menghitamkan rambut agar tampak lebih fresh."
+      "Paket layanan ini cocok untuk kamu yang ingin menghitamkan rambut agar tampak lebih fresh.",
   });
   Service.create({
     name: "Hair Perming",
     price: 250000,
-    description:
-      "Paket layanan ini cocok untuk kamu yang ingin tampil beda."
+    description: "Paket layanan ini cocok untuk kamu yang ingin tampil beda.",
   });
 
   // create bookings
   const booking1 = await Booking.create({
-    date: '2023-12-30 01:39:48',
+    date: "2023-12-30 01:39:48",
     time: 19,
-    isDone: false
-  })
-  customer.addBooking(booking1)
-  basicCut.addBooking(booking1)
+    isDone: false,
+  });
+  customer.addBooking(booking1);
+  basicCut.addBooking(booking1);
+
+  // create testimony
+  const testimony1 = await Testimony.create({
+    date: "2024-1-3 18:30:48",
+    rating: 5,
+    description: "Kerennnn barbershopnya bersih, capsternya rapi dan ramah",
+  });
+  customer.addTestimony(testimony1);
 }
+
 
 // `force: true` will reset the database everytime we run server.js
 db.sequelize.sync({force: true}).then(() => {
@@ -119,6 +128,7 @@ require('./app/routes/user.routes')(app);
 require('./app/routes/capster.routes')(app);
 require('./app/routes/service.routes')(app);
 require('./app/routes/booking.routes')(app);
+require('./app/routes/testimony.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
