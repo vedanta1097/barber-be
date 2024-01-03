@@ -15,7 +15,7 @@ exports.addBooking = async (req, res) => {
     // add user and service to the booking
     const token = req.headers['x-access-token']
     const decoded = jwt.verify(token, config.secret)
-    const asdasd = await Promise.all([
+    await Promise.all([
       newBooking.setUser(decoded.id),
       newBooking.setService(req.body.serviceId)
     ])
@@ -30,8 +30,17 @@ exports.addBooking = async (req, res) => {
   }
 }
 
-exports.doneBooking = (req, res) => {
+exports.doneBooking = async (req, res) => {
   try {
+    const booking = await Booking.findByPk(req.params.id)
+    if (!booking) {
+      return res.status(404).send({ message: 'Booking Not found.' });
+    }
+    await Booking.update({ isDone: true }, {
+      where: {
+        id: req.params.id
+      }
+    })
     res.status(200).send({
       message: 'Booking is successfully completed'
     })
