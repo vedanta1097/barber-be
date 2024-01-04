@@ -15,7 +15,7 @@ exports.addTestimony = async (req, res) => {
     // add user to the testimony
     const token = req.headers["x-access-token"];
     const decoded = jwt.verify(token, config.secret);
-    await Promise.all([newTestimony.setUser(decoded.id)]);
+    await newTestimony.setUser(decoded.id);
 
     res.status(200).send({
       message: "Testimony is successfully created",
