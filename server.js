@@ -74,17 +74,23 @@ async function initial() {
 
   // create services
   const basicCut = await Service.create({
-    name: 'Basic Cut',
-    price: 35000
-  })
+    name: "Basic Cut",
+    price: 35000,
+    description:
+      "Paket layanan yang paling sederhana, cocok untuk kamu yang hanya ingin potong rambut."
+  });
   Service.create({
-    name: 'Hair Color',
-    price: 80000
-  })
+    name: "Hair Color Black",
+    price: 80000,
+    description:
+      "Paket layanan ini cocok untuk kamu yang ingin menghitamkan rambut agar tampak lebih fresh."
+  });
   Service.create({
-    name: 'Hair Perming',
-    price: 250000
-  })
+    name: "Hair Perming",
+    price: 250000,
+    description:
+      "Paket layanan ini cocok untuk kamu yang ingin tampil beda."
+  });
 
   // create bookings
   const booking1 = await Booking.create({
@@ -111,6 +117,7 @@ app.get('/', (req, res) => {
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require('./app/routes/capster.routes')(app);
+require('./app/routes/service.routes')(app);
 require('./app/routes/booking.routes')(app);
 
 // set port, listen for requests
