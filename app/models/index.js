@@ -27,6 +27,7 @@ db.role = require('./role.model.js')(sequelize, Sequelize);
 db.capster = require('./capster.model.js')(sequelize, Sequelize);
 db.service = require('./service.model.js')(sequelize, Sequelize);
 db.booking = require('./booking.model.js')(sequelize, Sequelize);
+db.testimony = require("./testimony.model.js")(sequelize, Sequelize);
 
 // many to many user & role
 db.role.belongsToMany(db.user, {
@@ -43,6 +44,10 @@ db.booking.belongsTo(db.user)
 // service 1 to n booking
 db.service.hasMany(db.booking)
 db.booking.belongsTo(db.service)
+
+// user 1 to n testimony
+db.user.hasMany(db.testimony)
+db.testimony.belongsTo(db.user)
 
 db.ROLES = ['user', 'admin'];
 db.GENDERS = ['M', 'F'];
