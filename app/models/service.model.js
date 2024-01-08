@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   const Service = sequelize.define("services", {
+    image: {
+      type: Sequelize.STRING,
+    },
     name: {
       type: Sequelize.STRING,
     },
@@ -7,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER,
     },
     description: {
+      type: Sequelize.STRING,
+    },
+    detail: {
       type: Sequelize.STRING,
     },
   });
