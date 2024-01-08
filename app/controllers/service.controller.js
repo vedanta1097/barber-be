@@ -4,9 +4,11 @@ const Service = db.service;
 exports.addService = async (req, res) => {
   try {
     await Service.create({
+      image: req.body.image,
       name: req.body.name,
       price: req.body.price,
       description: req.body.description,
+      detail: req.body.detail,
     });
     res.status(200).send({
       message: "Service is successfully added.",
@@ -27,9 +29,11 @@ exports.updateService = async (req, res) => {
     }
     await Service.update(
       {
+        image: req.body.image,
         name: req.body.name,
         price: req.body.price,
-        description: req.body.description
+        description: req.body.description,
+        detail: req.body.detail,
       },
       {
         where: {
