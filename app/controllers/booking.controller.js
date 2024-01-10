@@ -4,6 +4,8 @@ const db = require('../models');
 const Op = db.Sequelize.Op;
 const config = require('../config/auth.config.js');
 const Booking = db.booking;
+const User = db.user;
+const Service = db.service;
 
 exports.addBooking = async (req, res) => {
   try {
@@ -61,7 +63,11 @@ exports.getBookings = async (req, res) => {
         date: {
           [Op.gte]: new Date()
         }
-      }
+      },
+      include: [
+        { model: Service, attributes: ['id', 'image', 'name', 'price', 'description', 'detail'] },
+        { model: User, attributes: ['id', 'username', 'email'] }
+      ]
     })
     res.status(200).send(bookings)
   } catch {
@@ -85,7 +91,11 @@ exports.getMyBookings = async (req, res) => {
           [Op.gte]: new Date()
         },
         userId: decoded.id
-      }
+      },
+      include: [
+        { model: Service, attributes: ['id', 'image', 'name', 'price', 'description', 'detail'] },
+        { model: User, attributes: ['id', 'username', 'email'] }
+      ]
     })
     res.status(200).send(bookings)
   } catch {
